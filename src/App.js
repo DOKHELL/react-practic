@@ -1,12 +1,15 @@
-import React from 'react';
-import './App.css';
+import React, {Component} from 'react';
+import Layout from "./hoc/layout/layout";
+import Quiz from './containers/Quiz/Quiz';
 
-function App() {
-  return (
-    <div className="App">
-
-    </div>
-  );
+class App extends Component {
+    render() {
+        return (
+            <Layout>
+                <Quiz/>
+            </Layout>
+        );
+    }
 }
 
 export default App;
