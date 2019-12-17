@@ -5,7 +5,6 @@ const AnswerItem = props => {
     const classes = ['AnswerItem'];
     if (props.state) {
         classes.push(props.state)
-        console.log(classes)
     }
     return (
         <li
