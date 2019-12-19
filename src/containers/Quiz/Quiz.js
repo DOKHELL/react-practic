@@ -33,6 +33,39 @@ class Quiz extends Component {
                     {text: '1846', id: 4}
                 ]
             },
+            {
+                question: 'How year create Foto ?',
+                rightAnswerId: 3,
+                id: 3,
+                answers: [
+                    {text: '1978', id: 1},
+                    {text: '1764', id: 2},
+                    {text: '1923', id: 3},
+                    {text: '1846', id: 4}
+                ]
+            },
+            {
+                question: 'How year create Foto ?',
+                rightAnswerId: 3,
+                id: 4,
+                answers: [
+                    {text: '1978', id: 1},
+                    {text: '1764', id: 2},
+                    {text: '1923', id: 3},
+                    {text: '1846', id: 4}
+                ]
+            },
+            {
+                question: 'How year create Foto ?',
+                rightAnswerId: 3,
+                id: 5,
+                answers: [
+                    {text: '1978', id: 1},
+                    {text: '1764', id: 2},
+                    {text: '1923', id: 3},
+                    {text: '1846', id: 4}
+                ]
+            },
         ]
     };
     onAnswerHandler = (answerId) => {
@@ -47,8 +80,8 @@ class Quiz extends Component {
         const results = this.state.results;
 
         if (question.rightAnswerId === answerId) {
-            if (!results[answerId]) {
-                results[answerId] = 'success'
+            if (!results[question.id]) {
+                results[question.id] = 'success'
             }
 
             this.setState({
@@ -71,7 +104,7 @@ class Quiz extends Component {
             }, 1000)
 
         } else {
-            results[answerId] = 'error';
+            results[question.id] = 'error';
             this.setState({
                 answerState: {[answerId]: 'error'},
                 results,
@@ -80,6 +113,14 @@ class Quiz extends Component {
     };
     isQuizFinish() {
         return this.state.activeQuestion + 1 === this.state.quiz.length;
+    }
+    resetQuizHundler = () => {
+        this.setState({
+            results: {},
+            isFinished: false,
+            activeQuestion: 0,
+            answerState: null,
+        })
     }
 
     render() {
@@ -91,6 +132,7 @@ class Quiz extends Component {
                         this.state.isFinished ? <FinishedQuiz
                                 results={this.state.results}
                                 quiz={this.state.quiz}
+                                resetQuiz={this.resetQuizHundler}
                             /> :
                             <ActiveQuiz
                                 question={this.state.quiz[this.state.activeQuestion].question}
