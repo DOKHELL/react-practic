@@ -3,6 +3,7 @@ import './FinishedQuiz.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes, faCheck } from '@fortawesome/free-solid-svg-icons';
 import Button from "../UI/Button/Button";
+import { Link } from 'react-router-dom';
 
 const FinishedQuiz = props => {
 
@@ -31,7 +32,6 @@ const FinishedQuiz = props => {
                             <FontAwesomeIcon
                                 icon={ico[0]}
                                 className={cls.join(' ')}
-
                             />
                         </li>
                     )
@@ -45,11 +45,12 @@ const FinishedQuiz = props => {
                 >
                     restart
                 </Button>
-                <Button
-                    type={'btn-success'}
-                >
-                    in all list test
-                </Button>
+                <Link to={'/'}>
+                    <Button
+                        type={'btn-success'}
+                    >Go to all list test
+                    </Button>
+                </Link>
             </div>
         </div>
     )

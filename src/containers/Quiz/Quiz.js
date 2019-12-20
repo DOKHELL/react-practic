@@ -6,7 +6,7 @@ import FinishedQuiz from '../../components/FinishedQuiz/FinishedQuiz'
 
 class Quiz extends Component {
     state = {
-        results: {}, // {[id]: success}
+        results: {},
         isFinished: false,
         activeQuestion: 0,
         answerState: null,
@@ -70,7 +70,7 @@ class Quiz extends Component {
     };
     onAnswerHandler = (answerId) => {
         if (this.state.answerState) {
-            const key = Object.keys(this.state.answerState)[0]
+            const key = Object.keys(this.state.answerState)[0];
             if (this.state.answerState[key] === 'success') {
                 return
             }
