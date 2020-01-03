@@ -13,7 +13,7 @@ class QuizList extends Component {
             return (
                 <li key={quiz.id}>
                     <NavLink to={'/quiz/' + quiz.id}>
-                        Test {quiz.name}
+                        {quiz.name}
                     </NavLink>
                 </li>
             )
@@ -25,11 +25,10 @@ class QuizList extends Component {
     }
 
     render() {
-        console.log(this.props)
         return (
             <div className={'QuizList'}>
                 <div>
-                    <h1>Test-List</h1>
+                    <h1>Список доступных тестов</h1>
                     <ul>
                         { this.props.loader ? <Loader/> : this.renderQuizes() }
                     </ul>

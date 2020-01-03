@@ -8,23 +8,28 @@ export function auth(email, password, isLogin) {
             password: password,
             returnSecureToken: true
         };
-        let url = 'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=\n' +
-        'AIzaSyAcSaZKu2-orDKrnu3AdQxY7r_ZnK5KQN0';
+        let url = 'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=\n' +
+            'AIzaSyAcSaZKu2-orDKrnu3AdQxY7r_ZnK5KQN0';
         if (isLogin) {
             url = 'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=\n' +
             'AIzaSyAcSaZKu2-orDKrnu3AdQxY7r_ZnK5KQN0'
         }
-        const response = await axios.post(url, authData);
-        const data = response.data;
+        try {
+            const response = await axios.post(url, authData);
 
-        const expirationDate = new Date(new Date().getTime() + data.expiresIn * 1000);
+            const data = response.data;
 
-        localStorage.setItem('token', data.idToken);
-        localStorage.setItem('userId', data.localId);
-        localStorage.setItem('expirationDate', expirationDate);
+            const expirationDate = new Date(new Date().getTime() + data.expiresIn * 1000);
 
-        dispatch(authSuccess(data.idToken))
-        dispatch(autoLogout(data.expiresIn))
+            localStorage.setItem('token', data.idToken);
+            localStorage.setItem('userId', data.localId);
+            localStorage.setItem('expirationDate', expirationDate);
+
+            dispatch(authSuccess(data.idToken));
+            dispatch(autoLogout(data.expiresIn));
+        } catch (e) {
+            alert('Неверный емайл или пароль!')
+        }
     }
 }
 
@@ -42,6 +47,23 @@ export function logout() {
     localStorage.removeItem('expirationDate');
     return {
         type: AUTH_LOGOUT,
+    }
+}
+
+export function autoLogin() {
+    return dispatch => {
+        const token = localStorage.getItem('token')
+        if (!token) {
+            dispatch(logout())
+        } else {
+            const expirationDate = new Date(localStorage.getItem('expirationDate'))
+            if (expirationDate <= new Date()){
+                dispatch(logout())
+            } else {
+                dispatch(authSuccess(token));
+                dispatch(autoLogout((expirationDate.getTime() - new Date().getTime()) /1000))
+            }
+        }
     }
 }
 

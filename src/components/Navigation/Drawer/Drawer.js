@@ -3,15 +3,10 @@ import './Drawer.scss';
 import {NavLink} from 'react-router-dom';
 import BackDrop from "../../UI/BackDrop/BackDrop";
 
-const links = [
-    {to: '/', label: 'List', exact: true},
-    {to: '/auth', label: 'SingIn', exact: false},
-    {to: '/quiz-creator', label: 'Create test', exact: false},
-];
 
 class Drawer extends Component {
 
-    renderLinks() {
+    renderLinks(links) {
         return links.map((link, index) => {
             return (
                 <li key={index}>
@@ -34,11 +29,20 @@ class Drawer extends Component {
             'Drawer',
             !this.props.isOpen ? 'close' : null
         ];
+        const links = [
+            {to: '/', label: 'Список тестов', exact: true},
+        ];
+        if (this.props.isAuthenticated) {
+            links.push({to: '/quiz-creator', label: 'Создать тест', exact: false});
+            links.push({to: '/logout', label: 'Выйти', exact: false})
+        } else {
+            links.push({to: '/auth', label: 'Войти/Регистрация', exact: false})
+        }
         return (
             <React.Fragment>
                 <nav className={cls.join(' ')}>
                     <ul>
-                        { this.renderLinks() }
+                        { this.renderLinks(links) }
                     </ul>
                 </nav>
                 {this.props.isOpen ? <BackDrop onClick={this.props.backDropClick}/> : null}

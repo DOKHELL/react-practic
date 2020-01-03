@@ -10,17 +10,21 @@ import {createQuizQuestion, finishCreateQuiz} from "../../store/actions/create";
 
 function createOptionControl(number) {
     return createControl({
-        label: `Variation ${number}`,
-        errorMessage: 'Question cant was empty!',
+        label: `Вариант ответа ${number}`,
+        errorMessage: 'Поле не может быть пустым!',
         id: number,
     }, {required: true})
 }
 
 function createFormControls() {
     return {
+        testName: createControl({
+            label: 'Введите название теста',
+            errorMessage: 'Поле не может быть пустым!',
+        }, {required: true}),
         question: createControl({
-            label: 'Enter question',
-            errorMessage: 'Question cant was empty!',
+            label: 'Введите вопрос',
+            errorMessage: 'Поле не может быть пустым!',
         }, {required: true}),
         option1: createOptionControl(1),
         option2: createOptionControl(2),
@@ -34,7 +38,8 @@ class QuizCreator extends Component {
     state = {
         isFormValid: false,
         rightAnswerId: 1,
-        formControls: createFormControls()
+        formControls: createFormControls(),
+        testName: null
     };
 
     submitHandler = (e) => {
@@ -43,8 +48,7 @@ class QuizCreator extends Component {
 
     addQuestionHandler = (e) => {
         e.preventDefault();
-        const {question, option1, option2, option3, option4} = this.state.formControls;
-
+        const {testName, question, option1, option2, option3, option4} = this.state.formControls;
         const questionItem = {
             question: question.value,
             rightAnswer: this.state.rightAnswerId,
@@ -56,13 +60,22 @@ class QuizCreator extends Component {
                 {text: option4.value, id: option4.id},
             ]
         };
-        this.props.createQuizQuestion(questionItem);
-
-        this.setState({
-            isFormValid: false,
-            rightAnswerId: 1,
-            formControls: createFormControls()
-        });
+        if (this.state.testName) {
+            this.props.createQuizQuestion(questionItem);
+        } else {
+            const name = testName.value;
+            this.setState({
+                testName: name,
+            });
+            this.props.createQuizQuestion(questionItem, name);
+        }
+        const formControls = createFormControls();
+        delete formControls.testName;
+         this.setState({
+             isFormValid: false,
+             rightAnswerId: 1,
+             formControls: formControls
+         });
     };
 
     createQuestionHandler = e => {
@@ -71,7 +84,8 @@ class QuizCreator extends Component {
         this.setState({
             isFormValid: false,
             rightAnswerId: 1,
-            formControls: createFormControls()
+            formControls: createFormControls(),
+            testName: null
         });
         this.props.finishCreateQuiz()
     };
@@ -111,7 +125,7 @@ class QuizCreator extends Component {
                         errorMessage={control.errorMessage}
                         onChange={e => this.changeHandler(e.target.value, controlName)}
                     />
-                    { index === 0 ? <hr/> : null }
+                    { index === 1 ? <hr/> : null }
                 </React.Fragment>
             )
         })
@@ -121,13 +135,13 @@ class QuizCreator extends Component {
         return (
             <div className={'QuizCreator'}>
                 <div>
-                    <h1>Create Test</h1>
+                    <h1>Создание теста</h1>
 
                     <form onSubmit={this.submitHandler}>
                         { this.renderInputs() }
 
                         <Select
-                            label={'Enter right answer!'}
+                            label={'Выберите правильный номер ответа'}
                             value={this.state.rightAnswerId}
                             onChange={this.onSelectHandler}
                             options={[
@@ -142,13 +156,13 @@ class QuizCreator extends Component {
                             type='primary'
                             onClick={this.addQuestionHandler}
                             disabled={!this.state.isFormValid}
-                        >Add question
+                        >Добавить вопрос в тест
                         </Button>
                         <Button
                             type='btn-success'
                             onClick={this.createQuestionHandler}
                             disabled={this.props.quiz.length < 2}
-                        >Create test
+                        >Создать тест
                         </Button>
                     </form>
                 </div>
@@ -164,7 +178,7 @@ function mapStateToProps(state) {
 }
 function mapDispatchToProps(dispatch) {
     return {
-        createQuizQuestion: item => dispatch(createQuizQuestion(item)),
+        createQuizQuestion: (item, name) => dispatch(createQuizQuestion(item, name)),
         finishCreateQuiz: () => dispatch(finishCreateQuiz())
     }
 }

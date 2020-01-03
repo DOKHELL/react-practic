@@ -19,7 +19,7 @@ class Auth extends Component {
                 value: '',
                 type: 'email',
                 label: 'Email',
-                errorMessage: 'Enter right email!',
+                errorMessage: 'Введите коректный емайл!',
                 valid: false,
                 touched: false,
                 validation: {
@@ -31,7 +31,7 @@ class Auth extends Component {
                 value: '',
                 type: 'password',
                 label: 'Password',
-                errorMessage: 'Enter right password!',
+                errorMessage: 'Введите коректный пароль!',
                 valid: false,
                 touched: false,
                 validation: {
@@ -48,18 +48,6 @@ class Auth extends Component {
             this.state.formControls.password.value,
             true
         );
-        // const authData = {
-        //     email: this.state.formControls.email.value,
-        //     password: this.state.formControls.password.value,
-        //     returnSecureToken: true
-        // };
-        // try {
-        //     const response = await axios.post('https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=\n' +
-        //         'AIzaSyAcSaZKu2-orDKrnu3AdQxY7r_ZnK5KQN0', authData);
-        //
-        // } catch (e) {
-        //     console.log(e)
-        // }
     };
 
     registerHandler = () => {
@@ -68,13 +56,6 @@ class Auth extends Component {
             this.state.formControls.password.value,
             false
         );
-        // try {
-        //     const response = await axios.post('https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=\n' +
-        //         'AIzaSyAcSaZKu2-orDKrnu3AdQxY7r_ZnK5KQN0', authData);
-        //
-        // } catch (e) {
-        //     console.log(e)
-        // }
     };
 
     submitHandler = (e) => {
@@ -144,17 +125,17 @@ class Auth extends Component {
         return (
             <div className={'Auth'}>
                 <div>
-                    <h1>Auth</h1>
+                    <h1>Вход / Регистрация</h1>
                     <form className={'AuthForm'} onSubmit={this.submitHandler}>
                         { this.renderInputs() }
                         <Button onClick={this.loginHandler}
                                 type='btn-success'
                                 disabled={!this.state.isFormValid}
-                        >Sign in</Button>
+                        >Войти</Button>
                         <Button onClick={this.registerHandler}
                                 type='primary'
                                 disabled={!this.state.isFormValid}
-                        >Sign up</Button>
+                        >Зарегистрироваться</Button>
                     </form>
                 </div>
             </div>

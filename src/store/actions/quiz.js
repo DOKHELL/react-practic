@@ -14,12 +14,12 @@ export function fetchQuizes() {
         try {
             const response = await axios.get('/quizes.json');
             const quizes = [];
-            Object.keys(response.data).forEach((key, index) => {
+            for (let key in response.data) {
                 quizes.push({
                     id: key,
-                    name: `Test ${index + 1}`
-                })
-            });
+                    name: response.data[key][1]
+                });
+            }
             dispatch(fetchQuizesSuccess(quizes)) //success
         } catch (error) {
             dispatch(fetchQuizesError(error)) //error
@@ -27,10 +27,11 @@ export function fetchQuizes() {
     }
 }
 export function fetchQuizById(quizId) {
+    console.log(quizId)
     return async dispatch => {
         dispatch(fetchQuizesStart()); // start
         try {
-            const response = await axios.get(`/quizes/${quizId}.json`);
+            const response = await axios.get(`/quizes/${quizId}/0.json`);
             const quiz = response.data;
             dispatch(fetchQuizSuccess(quiz));
         } catch (error) {
