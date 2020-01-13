@@ -9,6 +9,7 @@ import {connect} from "react-redux";
 import {Redirect} from 'react-router-dom';
 import Logout from "./components/Logout/Logout";
 import {autoLogin} from "./store/actions/auth";
+import QuizTodo from "./containers/QuizTodo/QuizTodo";
 
 class App extends Component {
     componentDidMount() {
@@ -22,7 +23,7 @@ class App extends Component {
                 <Route path="/auth" component={Auth} />
                 <Route path="/quiz/:id" component={Quiz} />
                 <Route path="/" exact component={QuizList} />
-                <Redirect to={'/'} />
+                {/*<Redirect to={'/'} />*/}
             </Switch>
         );
         if (this.props.isAuthenticated) {
@@ -30,9 +31,10 @@ class App extends Component {
                 <Switch>
                     <Route path="/quiz-creator" component={QuizCreator} />
                     <Route path="/quiz/:id" component={Quiz} />
+                    <Route path="/quiz-todo" component={QuizTodo} />
                     <Route path='/logout' component={Logout}/>
                     <Route path="/" exact component={QuizList} />
-                    <Redirect to={'/'} />
+                    {/*<Redirect to={'/'} />*/}
                 </Switch>
             );
         }

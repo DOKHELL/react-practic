@@ -1,0 +1,29 @@
+
+.todos {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  border-top: 1px solid grey;
+}
+
+.todos li {
+  background: #f7f7f7;
+  height: 50px;
+  line-height: 50px;
+  cursor: pointer;
+  font-size: 20px;
+}
+
+.todos li {
+  padding: 0 8px;
+}
+
+.todos li:nth-child(2n) {
+  background: #edf1f5;
+}
+
+.todos li:hover span.todo-trash {
+  width: 50px;
+  opacity: 1.0;
+  margin-left: 5px;
+}

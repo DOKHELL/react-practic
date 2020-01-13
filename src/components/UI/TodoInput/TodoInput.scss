@@ -1,0 +1,22 @@
+
+.todoInput {
+  background: white;
+  width: 100%;
+  box-sizing: border-box;
+  height: 50px;
+  font-size: 20px;
+  padding-left: 25px;
+  border: none;
+  color: gray;
+    &:focus {
+       background: #edf1f5;
+       border: none;
+       outline: none;
+       color: #86a8e7;
+     }
+}
+.todoError-message {
+  color: red;
+  font-size: 15px;
+  padding: 5px 15px;
+}

@@ -34,6 +34,7 @@ class Drawer extends Component {
         ];
         if (this.props.isAuthenticated) {
             links.push({to: '/quiz-creator', label: 'Создать тест', exact: false});
+            links.push({to: '/quiz-todo', label: 'Создать список задач', exact: false});
             links.push({to: '/logout', label: 'Выйти', exact: false})
         } else {
             links.push({to: '/auth', label: 'Войти/Регистрация', exact: false})

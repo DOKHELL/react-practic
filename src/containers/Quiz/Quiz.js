@@ -8,6 +8,7 @@ import {fetchQuizById, quizAnswerClick, resetQuizHundler} from "../../store/acti
 
 class Quiz extends Component {
 
+
     componentDidMount() {
         this.props.fetchQuizById(this.props.match.params.id)
     }

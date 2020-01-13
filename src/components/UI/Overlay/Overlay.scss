@@ -1,0 +1,43 @@
+.overlay.height,
+overlayEmail.height {
+  height: 100%;
+}
+.overlayEmail {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  font-size: 25px;
+}
+.overlayEmail input {
+  margin-bottom: 10px;
+}
+.overlay, .overlayEmail {
+  height: 0;
+  width: 100%;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  background-color: rgba(0, 0, 0, 0.7);
+  overflow: hidden;
+  transition: height 0.5s ease;
+}
+
+.overlay .closeTips,
+.overlayEmail .closeEmailForm {
+  position: absolute;
+  top: 15px;
+  right: 40px;
+  font-size: 60px;
+  color: #86a8e7;
+  cursor: pointer;
+}
+
+.overlay li {
+  padding: 8px;
+  list-style-type: circle;
+  font-size: 30px;
+  color: #818181;
+  display: block;
+}
