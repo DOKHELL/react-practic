@@ -1,5 +1,5 @@
 import axios from 'axios'
-import {ADD_TODO_TO_LIST, CHANGE_VALUE, RESET_ALL_TODOS, RESET_VALUE_TODO, UPDATE_TODO} from "./actionTypes";
+import {ADD_TODO_TO_LIST, CHANGE_VALUE, INVALID_VALUE, RESET_ALL_TODOS, RESET_VALUE_TODO} from "./actionTypes";
 
 
 export function addTodoItem(value, id) {
@@ -11,12 +11,11 @@ export function addTodoItem(value, id) {
     }
 }
 
-export function autoLoading() {
-  const todos = JSON.parse(localStorage.getItem('todos'));
-    if (todos) {
-       return {
-            type: UPDATE_TODO,
-            todos
+export function checkLocalStorage() {
+    return dispatch => {
+        const todos = JSON.parse(localStorage.getItem('todos'));
+        if (todos) {
+            dispatch(updateTodoState(todos))
         }
     }
 }
@@ -42,19 +41,28 @@ export function resetTodos() {
 
 export function changeValue(e) {
     const value = e.target.value;
-    return {
-        type: CHANGE_VALUE,
-        value
-    }
+        return {
+            type: CHANGE_VALUE,
+            value
+        }
 }
 export function KeyHandler(e) {
     return dispatch => {
         const value = e.target.value;
-        if (e.keyCode === 13) {
-            let id = Math.floor(Math.random() * 1000000000);
-           dispatch(addTodoItem(value, id));
-           dispatch(resetValue())
+        if (value.length >= 5) {
+            if (e.keyCode === 13) {
+                let id = Math.floor(Math.random() * 1000000000);
+                dispatch(addTodoItem(value, id));
+                dispatch(resetValue())
+            }
+        } else {
+            dispatch(validateTodoInput())
         }
+    }
+}
+export function validateTodoInput() {
+    return {
+        type: INVALID_VALUE
     }
 }
 export function sendEmail() {
@@ -74,7 +82,6 @@ export function sendEmail() {
         };
         try {
             const response = await axios.post(`https://api.emailjs.com/api/v1.0/email/send`, data);
-            const test = response.data;
             fetchTodoError(response)
         } catch (error) {
             dispatch(fetchTodoError(error)) //error

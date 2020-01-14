@@ -7,7 +7,7 @@ import TodoList from "../../components/TodoList/TodoList";
 import Button from "../../components/UI/Button/Button";
 import Overlay from "../../components/UI/Overlay/Overlay";
 import {connect} from "react-redux";
-import { autoLoading, changeValue, KeyHandler, resetTodos, sendEmail} from "../../store/actions/todo";
+import { checkLocalStorage, changeValue, KeyHandler, resetTodos, sendEmail} from "../../store/actions/todo";
 import EmailFormTodo from "../../components/EmailFormTodo/EmailFormTodo";
 
 
@@ -17,14 +17,14 @@ class QuizTodo extends Component {
         EmailSenderIsVisible: false
     };
   componentDidMount() {
-     this.props.autoLoading()
+     this.props.checkLocalStorage()
     }
     HelpInfoShower = () => {
         this.setState({
             helperIsVisible: !this.state.helperIsVisible
         })
     };
-    test = () => {
+    ShowEmailForm = () => {
         this.setState({
             EmailSenderIsVisible: !this.state.EmailSenderIsVisible
         })
@@ -44,6 +44,7 @@ class QuizTodo extends Component {
                         placeholder={'Добавить список'}
                         onKeyUp={this.props.KeyHandler}
                         onChange={this.props.changeValue}
+                        invalid={this.props.invalid}
                     />
                     <TodoList
                         todos={this.props.todos}
@@ -53,14 +54,14 @@ class QuizTodo extends Component {
                         <Button
                             type={'todo-button'}
                             disabled={false}
-                            onClick={this.test}
+                            onClick={this.ShowEmailForm}
                         >
                             Отправить на Email
                         </Button>
                         <Button
                             type={'todo-button'}
                             disabled={false}
-                            onClick={this.props.sendEmail}
+                            onClick={this.props.resetTodos}
                         >
                             Очистить
                         </Button>
@@ -80,6 +81,7 @@ class QuizTodo extends Component {
                 <EmailFormTodo
                     visible={this.state.EmailSenderIsVisible}
                     onClick={this.props.sendEmail}
+                    close={this.ShowEmailForm}
                 />
             </div>
             )
@@ -90,6 +92,7 @@ function mapStateToProps(state) {
         todos: state.todo.todos,
         value: state.todo.value,
         helperIsVisible: state.todo.helperIsVisible,
+        invalid: state.todo.invalid
     }
 }
 
@@ -97,7 +100,7 @@ function mapDispatchToProps(dispatch) {
     return {
         changeValue: (e) => dispatch(changeValue(e)),
         KeyHandler: (e) => dispatch(KeyHandler(e)),
-        autoLoading: () => dispatch(autoLoading()),
+        checkLocalStorage: () => dispatch(checkLocalStorage()),
         resetTodos: () => dispatch(resetTodos()),
         sendEmail: () => dispatch(sendEmail())
     }

@@ -5,7 +5,6 @@ const TodoInput = props => {
     const inputType = props.type || 'text',
           inputPlaceholder = props.placeholder || '',
           cls = ['todoInput'];
-
     return (
         <React.Fragment>
             <input
@@ -16,7 +15,7 @@ const TodoInput = props => {
                 onKeyUp={props.onKeyUp}
                 onChange={props.onChange}
             />
-            {/*{ props.value < 5 ? <span className={'todoError-message'}>{props.errorMessage || 'Введите более 5 символов!'}</span> : null}*/}
+            { props.invalid ? <span className={'todoError-message'}>{props.errorMessage || 'Введите более 4 символов!'}</span> : null}
         </React.Fragment>
     )
 };

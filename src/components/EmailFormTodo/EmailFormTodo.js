@@ -10,7 +10,7 @@ const EmailFormTodo = props => {
     }
     return (
             <div className={cls.join(' ')}>
-                <a className="closeEmailForm">&times;</a>
+                <i onClick={props.close} className="closeEmailForm">&times;</i>
                 <form name="EmailForm">
                     <TodoInput
                         type={'email'}

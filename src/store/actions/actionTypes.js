@@ -17,6 +17,6 @@ export const AUTH_LOGOUT = 'AUTH_LOGOUT';
 export const ADD_TODO_TO_LIST = 'ADD_TODO';
 export const CHANGE_VALUE = 'CHANGE_VALUE';
 export const RESET_VALUE_TODO = 'RESET_VALUE_TODO';
-export const UPDATE_TODO = 'UPDATE_TODO';
 export const RESET_ALL_TODOS = 'RESET_ALL_TODOS';
+export const INVALID_VALUE = 'INVALID_VALUE';
 

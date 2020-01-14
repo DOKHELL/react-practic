@@ -22,9 +22,8 @@ class App extends Component {
         let routes = (
             <Switch>
                 <Route path="/auth" component={Auth} />
-                <Route path="/quiz/:id" component={Quiz} />
                 <Route path="/" exact component={QuizList} />
-                {/*<Redirect to={'/auth'} />*/}
+                <Redirect to={'/auth'} />
             </Switch>
         );
         if (this.props.isAuthenticated) {
@@ -35,7 +34,7 @@ class App extends Component {
                     <Route path="/quiz-todo" component={QuizTodo} />
                     <Route path='/logout' component={Logout}/>
                     <Route path="/" exact component={QuizList} />
-                    {/*<Redirect to={'/'} />*/}
+                    <Redirect to={'/'} />
                 </Switch>
             );
         }
