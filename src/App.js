@@ -14,6 +14,7 @@ import QuizTodo from "./containers/QuizTodo/QuizTodo";
 class App extends Component {
     componentDidMount() {
         this.props.autoLogin()
+
     }
 
     render() {
@@ -23,7 +24,7 @@ class App extends Component {
                 <Route path="/auth" component={Auth} />
                 <Route path="/quiz/:id" component={Quiz} />
                 <Route path="/" exact component={QuizList} />
-                {/*<Redirect to={'/'} />*/}
+                {/*<Redirect to={'/auth'} />*/}
             </Switch>
         );
         if (this.props.isAuthenticated) {

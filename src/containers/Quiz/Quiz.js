@@ -13,7 +13,7 @@ class Quiz extends Component {
         this.props.fetchQuizById(this.props.match.params.id)
     }
     componentWillUnmount() {
-        this.props.resetQuizHundler()
+       this.props.resetQuizHundler()
     }
     render() {
         return (

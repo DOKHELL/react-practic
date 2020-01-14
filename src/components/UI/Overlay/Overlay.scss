@@ -1,5 +1,5 @@
 .overlay.height,
-overlayEmail.height {
+.overlayEmail.height {
   height: 100%;
 }
 .overlayEmail {
@@ -8,9 +8,7 @@ overlayEmail.height {
   align-items: center;
   color: white;
   font-size: 25px;
-}
-.overlayEmail input {
-  margin-bottom: 10px;
+  text-align: center;
 }
 .overlay, .overlayEmail {
   height: 0;

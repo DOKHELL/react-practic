@@ -27,7 +27,6 @@ export function fetchQuizes() {
     }
 }
 export function fetchQuizById(quizId) {
-    console.log(quizId)
     return async dispatch => {
         dispatch(fetchQuizesStart()); // start
         try {

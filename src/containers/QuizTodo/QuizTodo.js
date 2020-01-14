@@ -6,46 +6,27 @@ import TodoInput from "../../components/UI/TodoInput/TodoInput";
 import TodoList from "../../components/TodoList/TodoList";
 import Button from "../../components/UI/Button/Button";
 import Overlay from "../../components/UI/Overlay/Overlay";
+import {connect} from "react-redux";
+import { autoLoading, changeValue, KeyHandler, resetTodos, sendEmail} from "../../store/actions/todo";
+import EmailFormTodo from "../../components/EmailFormTodo/EmailFormTodo";
 
 
 class QuizTodo extends Component {
     state = {
-        todos: JSON.parse(localStorage.getItem('todos')) || [],
-        value: '',
         helperIsVisible: false,
+        EmailSenderIsVisible: false
     };
-    onChangeHandler = (e) => {
-        this.setState({
-            value: e.target.value
-        })
-    };
-    KeyHandler = (e) => {
-        if (e.keyCode === 13) {
-            let id = Math.floor(Math.random() * 1000000000);
-            this.addTodoItem(e.target.value, id)
-        }
-    };
-
-    addTodoItem = (value, id) => {
-        const todos = [...this.state.todos];
-        todos.push({text: value, id: id});
-        this.setState({
-            todos,
-            value: ''
-        });
-        localStorage.setItem('todos', JSON.stringify(todos))
-    };
-
-
-    clearInput = () => {
-        this.setState({
-            todos: []
-        })
-        localStorage.removeItem('todos')
-    };
+  componentDidMount() {
+     this.props.autoLoading()
+    }
     HelpInfoShower = () => {
         this.setState({
             helperIsVisible: !this.state.helperIsVisible
+        })
+    };
+    test = () => {
+        this.setState({
+            EmailSenderIsVisible: !this.state.EmailSenderIsVisible
         })
     };
 
@@ -59,27 +40,27 @@ class QuizTodo extends Component {
                         />
                     </h1>
                     <TodoInput
-                        value={this.state.value}
+                        value={this.props.value}
                         placeholder={'Добавить список'}
-                        onKeyUp={this.KeyHandler}
-                        onChange={this.onChangeHandler}
+                        onKeyUp={this.props.KeyHandler}
+                        onChange={this.props.changeValue}
                     />
                     <TodoList
-                        todos={this.state.todos}
+                        todos={this.props.todos}
                         сlick={this.test}
                     />
                     <div className={'todo-buttons'}>
                         <Button
                             type={'todo-button'}
                             disabled={false}
-                            onClick={this.addTodoItem}
+                            onClick={this.test}
                         >
                             Отправить на Email
                         </Button>
                         <Button
                             type={'todo-button'}
                             disabled={false}
-                            onClick={this.clearInput}
+                            onClick={this.props.sendEmail}
                         >
                             Очистить
                         </Button>
@@ -96,9 +77,30 @@ class QuizTodo extends Component {
                     visible={this.state.helperIsVisible}
                     onClick={this.HelpInfoShower}
                 />
+                <EmailFormTodo
+                    visible={this.state.EmailSenderIsVisible}
+                    onClick={this.props.sendEmail}
+                />
             </div>
             )
     }
 }
+function mapStateToProps(state) {
+    return {
+        todos: state.todo.todos,
+        value: state.todo.value,
+        helperIsVisible: state.todo.helperIsVisible,
+    }
+}
 
-export default QuizTodo;
+function mapDispatchToProps(dispatch) {
+    return {
+        changeValue: (e) => dispatch(changeValue(e)),
+        KeyHandler: (e) => dispatch(KeyHandler(e)),
+        autoLoading: () => dispatch(autoLoading()),
+        resetTodos: () => dispatch(resetTodos()),
+        sendEmail: () => dispatch(sendEmail())
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(QuizTodo);
