@@ -22,14 +22,14 @@
 }
 
 
-span.todo-trash {
+.todo-trash {
   margin-right: 10px;
   text-align: center;
-  height: 50px;
   width: 0;
   opacity: 0;
-  -webkit-transition: 0.3s;
+  margin-left: 10px;
   transition: 0.3s linear;
+  color: #7f7fd5;
 }
 
 .todo-buttons {

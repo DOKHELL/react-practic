@@ -10,36 +10,38 @@ import Overlay from "../../components/UI/Overlay/Overlay";
 
 class QuizTodo extends Component {
     state = {
-        todos: [],
+        todos: JSON.parse(localStorage.getItem('todos')) || [],
         value: '',
-        helperIsVisible: false
+        helperIsVisible: false,
     };
     onChangeHandler = (e) => {
         this.setState({
             value: e.target.value
         })
     };
-
     KeyHandler = (e) => {
         if (e.keyCode === 13) {
-            this.addTodoItem(e.target.value)
+            let id = Math.floor(Math.random() * 1000000000);
+            this.addTodoItem(e.target.value, id)
         }
     };
 
-    addTodoItem = (value) => {
+    addTodoItem = (value, id) => {
         const todos = [...this.state.todos];
-        todos.push(value);
+        todos.push({text: value, id: id});
         this.setState({
-            todos: todos,
+            todos,
             value: ''
-        })
-
+        });
+        localStorage.setItem('todos', JSON.stringify(todos))
     };
+
 
     clearInput = () => {
         this.setState({
             todos: []
         })
+        localStorage.removeItem('todos')
     };
     HelpInfoShower = () => {
         this.setState({
@@ -62,7 +64,10 @@ class QuizTodo extends Component {
                         onKeyUp={this.KeyHandler}
                         onChange={this.onChangeHandler}
                     />
-                    <TodoList todos={this.state.todos}/>
+                    <TodoList
+                        todos={this.state.todos}
+                        сlick={this.test}
+                    />
                     <div className={'todo-buttons'}>
                         <Button
                             type={'todo-button'}

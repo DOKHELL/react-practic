@@ -16,6 +16,11 @@
 
 .todos li {
   padding: 0 8px;
+  &:hover {
+    .todo-trash {
+      opacity: 1;
+    }
+  }
 }
 
 .todos li:nth-child(2n) {
