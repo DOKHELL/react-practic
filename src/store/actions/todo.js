@@ -1,5 +1,12 @@
 import axios from 'axios'
-import {ADD_TODO_TO_LIST, CHANGE_VALUE, INVALID_VALUE, RESET_ALL_TODOS, RESET_VALUE_TODO} from "./actionTypes";
+import {
+    ADD_TODO_TO_LIST,
+    CHANGE_VALUE,
+    CHANGE_VALUE_EMAIL,
+    INVALID_VALUE,
+    RESET_ALL_TODOS,
+    RESET_VALUE_TODO
+} from "./actionTypes";
 
 
 export function addTodoItem(value, id) {
@@ -46,6 +53,15 @@ export function changeValue(e) {
             value
         }
 }
+
+export function changeValueEmail(e) {
+    const value = e.target.value;
+    console.log(value)
+    return {
+        type: CHANGE_VALUE_EMAIL,
+        value
+    }
+}
 export function KeyHandler(e) {
     return dispatch => {
         const value = e.target.value;
@@ -65,28 +81,31 @@ export function validateTodoInput() {
         type: INVALID_VALUE
     }
 }
-export function sendEmail() {
-    return async dispatch => {
-        const data = {
+export function test(message, email) {
+    return {
             service_id: 'gmail',
             template_id: 'template_uRs3Jnhp',
             user_id: 'user_nMCfC0X4yGYWg3ylzlEzk',
             template_params: {
                 'username': 'Sergey',
                 'g-recaptcha-response': '03AHJ_ASjnLA214KSNKFJAK12sfKASfehbmfd...',
-                'to_name': 'Юзер',
-                'from_name': 'Серега',
-                'message_html': 'worked',
-                'to_email': 'cerge.gladkovv@gmail.com',
+                'message_html': `${message}`,
+                'to_email': `${email}`,
             },
         };
-        try {
-            const response = await axios.post(`https://api.emailjs.com/api/v1.0/email/send`, data);
-            fetchTodoError(response)
-        } catch (error) {
-            dispatch(fetchTodoError(error)) //error
-        }
     }
+export function sendEmail(email) {
+    // return async (dispatch, getState) => {
+    //     const todos = getState().todo.todos;
+    //     let data = await dispatch(test(JSON.stringify(todos), email));
+    //     try {
+    //         const response = await axios.post(`https://api.emailjs.com/api/v1.0/email/send`, data);
+    //         console.log(response)
+    //
+    //     } catch (error) {
+    //         dispatch(fetchTodoError(error)) //error
+    //     }
+    // }
 }
 export function fetchTodoError(error) {
         console.log(error)

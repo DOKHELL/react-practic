@@ -1,10 +1,18 @@
-import {ADD_TODO_TO_LIST, CHANGE_VALUE, INVALID_VALUE, RESET_ALL_TODOS, RESET_VALUE_TODO} from "../actions/actionTypes";
+import {
+    ADD_TODO_TO_LIST,
+    CHANGE_VALUE,
+    CHANGE_VALUE_EMAIL,
+    INVALID_VALUE,
+    RESET_ALL_TODOS,
+    RESET_VALUE_TODO
+} from "../actions/actionTypes";
 
 const initialState = {
     todos: [],
     value: '',
     helperIsVisible: false,
-    invalid: false
+    invalid: false,
+    email: ''
 };
 
 
@@ -29,6 +37,10 @@ export default function todoReducer(state = initialState, action) {
         case INVALID_VALUE:
             return {
                 ...state, invalid: true
+            };
+        case CHANGE_VALUE_EMAIL:
+            return {
+                ...state, email: action.value
             };
         default:
             return state

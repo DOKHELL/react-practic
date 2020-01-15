@@ -7,7 +7,14 @@ import TodoList from "../../components/TodoList/TodoList";
 import Button from "../../components/UI/Button/Button";
 import Overlay from "../../components/UI/Overlay/Overlay";
 import {connect} from "react-redux";
-import { checkLocalStorage, changeValue, KeyHandler, resetTodos, sendEmail} from "../../store/actions/todo";
+import {
+    checkLocalStorage,
+    changeValue,
+    KeyHandler,
+    resetTodos,
+    sendEmail,
+    changeValueEmail
+} from "../../store/actions/todo";
 import EmailFormTodo from "../../components/EmailFormTodo/EmailFormTodo";
 
 
@@ -81,7 +88,10 @@ class QuizTodo extends Component {
                 <EmailFormTodo
                     visible={this.state.EmailSenderIsVisible}
                     onClick={this.props.sendEmail}
+                    email={this.props.email}
                     close={this.ShowEmailForm}
+                    onChange={this.props.changeValueEmail}
+                    value={this.props.email}
                 />
             </div>
             )
@@ -92,7 +102,8 @@ function mapStateToProps(state) {
         todos: state.todo.todos,
         value: state.todo.value,
         helperIsVisible: state.todo.helperIsVisible,
-        invalid: state.todo.invalid
+        invalid: state.todo.invalid,
+        email: state.todo.email
     }
 }
 
@@ -100,9 +111,10 @@ function mapDispatchToProps(dispatch) {
     return {
         changeValue: (e) => dispatch(changeValue(e)),
         KeyHandler: (e) => dispatch(KeyHandler(e)),
+        changeValueEmail: (e) => dispatch(changeValueEmail(e)),
         checkLocalStorage: () => dispatch(checkLocalStorage()),
         resetTodos: () => dispatch(resetTodos()),
-        sendEmail: () => dispatch(sendEmail())
+        sendEmail: (email) => dispatch(sendEmail(email))
     }
 }
 

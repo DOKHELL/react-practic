@@ -15,13 +15,14 @@ const EmailFormTodo = props => {
                     <TodoInput
                         type={'email'}
                         placeholder={'Введите емайл для отправки'}
-
+                        value={props.value}
+                        onChange={props.onChange}
                     />
                     <Button
                         className="sendEmail"
                         type={'todo-button'}
                         disabled={false}
-                        onClick={props.onClick}
+                        onClick={() => props.onClick(props.email)}
                     >Отправить</Button>
                 </form>
             </div>
